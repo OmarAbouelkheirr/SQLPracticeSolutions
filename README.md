@@ -34,3 +34,17 @@ JOIN MakeModels ON VehicleDetails.ModelID = MakeModels.ModelID
 JOIN SubModels ON VehicleDetails.SubModelID = SubModels.SubModelID
 JOIN DriveTypes ON VehicleDetails.DriveTypeID = DriveTypes.DriveTypeID
 JOIN FuelTypes ON VehicleDetails.FuelTypeID = FuelTypes.FuelTypeID;
+```
+
+---
+
+## 🚀 Problem 2: Get all vehicles made between 1950 and 2000
+
+### 💡 Solution:
+```sql
+select * from VehicleDetails 
+where Year between 1950 and 2000
+```
+
+---
+
