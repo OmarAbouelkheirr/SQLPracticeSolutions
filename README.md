@@ -48,3 +48,13 @@ where Year between 1950 and 2000
 
 ---
 
+## 🚀 Problem 3 : Get number vehicles made between 1950 and 2000
+
+### 💡 Solution:
+```sql
+select count(*) from VehicleDetails 
+where Year between 1950 and 2000
+```
+
+--- 
+
