@@ -73,7 +73,7 @@ order By NumberOfVehicles desc
 
 ## 🚀 Problem 5 : Get All Makes that have manufactured more than 12000 Vehicles in years 1950 to 2000
 
-### 💡 Solution One:
+### 💡 Solution One (With having):
 ```sql
 select Makes.Make, count(*) as NumberOfVehicles from VehicleDetails 
 join Makes on VehicleDetails.MakeID = Makes.MakeID
@@ -83,7 +83,7 @@ having count(*) > 12000
 order By NumberOfVehicles desc
 ```
 
-### 💡 Solution Two:
+### 💡 Solution Two (Without having):
 ```sql
 select * from (
 select Makes.Make, count(*) as NumberOfVehicles from VehicleDetails 
@@ -96,3 +96,32 @@ where R1.NumberOfVehicles > 12000;
 
 --- 
 
+## 🚀 Problem 6: Get number of vehicles made between 1950 and 2000 per make and add total vehicles column beside
+
+### 💡 Solution:
+```sql
+select Makes.Make, count(*) as NumberOfVehicles, (select count(*) from VehicleDetails) as TotalVehicles from VehicleDetails 
+join Makes on VehicleDetails.MakeID = Makes.MakeID
+where Year between 1950 and 2000
+group by Makes.Make
+order By NumberOfVehicles desc
+```
+
+--- 
+
+## 🚀 Problem 7: Get number of vehicles made between 1950 and 2000 per make and add total vehicles column beside it, then calculate it's percentage
+
+### 💡 Solution:
+```sql
+--count(*)/(select count(*) from VehicleDetails) as Perc
+select *,  Cast(NumberOfVehicles as float)/Cast (TotalVehicles as float) as Perc from
+(
+select Makes.Make, count(*) as NumberOfVehicles, TotalVehicles=(select count(*) from VehicleDetails) from VehicleDetails 
+join Makes on VehicleDetails.MakeID = Makes.MakeID
+where Year between 1950 and 2000
+group by Makes.Make
+) T1
+order By T1.NumberOfVehicles desc
+```
+
+--- 
