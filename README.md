@@ -125,3 +125,99 @@ order By T1.NumberOfVehicles desc
 ```
 
 --- 
+
+## 🚀 Problem 8: Get Make, FuelTypeName and Number of Vehicles per FuelType per Make
+
+### 💡 Solution:
+```sql
+select Makes.Make, FuelTypes.FuelTypeName, count(*) as NumberOfVehicles from VehicleDetails 
+join Makes on VehicleDetails.MakeID = Makes.MakeID
+join FuelTypes on FuelTypes.FuelTypeID = VehicleDetails.FuelTypeID
+where Year between 1950 and 2000
+group by FuelTypes.FuelTypeName, Makes.Make
+order by Makes.Make
+```
+
+--- 
+
+## 🚀 Problem 9: Get all vehicles that runs with GAS
+
+### 💡 Solution:
+```sql
+SELECT VehicleDetails.*, FuelTypes.FuelTypeName 
+FROM VehicleDetails 
+JOIN FuelTypes ON FuelTypes.FuelTypeID = VehicleDetails.FuelTypeID
+WHERE FuelTypes.FuelTypeName = 'GAS';
+```
+
+--- 
+
+## 🚀 Problem 10: Get all Makes that runs with GAS
+
+### 💡 Solution:
+```sql
+SELECT distinct Makes.Make, FuelTypes.FuelTypeName 
+FROM VehicleDetails 
+JOIN FuelTypes ON FuelTypes.FuelTypeID = VehicleDetails.FuelTypeID
+join Makes on Makes.MakeID = VehicleDetails.MakeID
+WHERE FuelTypes.FuelTypeName = 'GAS';
+```
+
+--- 
+
+
+## 🚀 Problem 11: Get Total Makes that runs with GAS
+
+### 💡 Solution:
+```sql
+select count(*) from 
+(
+SELECT distinct Makes.Make, FuelTypes.FuelTypeName 
+FROM VehicleDetails 
+JOIN FuelTypes ON FuelTypes.FuelTypeID = VehicleDetails.FuelTypeID
+join Makes on Makes.MakeID = VehicleDetails.MakeID
+WHERE FuelTypes.FuelTypeName = 'GAS'
+) T1
+
+```
+
+--- 
+
+
+## 🚀 Problem 12: Count Vehicles by make and order them by NumberOfVehicles from high to low.
+
+### 💡 Solution:
+```sql
+select Makes.Make, count(*) as NumberOfVehicles from VehicleDetails
+join Makes on VehicleDetails.MakeID = Makes.MakeID
+group by Makes.Make
+order by NumberOfVehicles desc
+```
+
+--- 
+
+## 🚀 Problem 13: Get all Makes/Count Of Vehicles that manufactures more than 20K Vehicles
+
+### 💡 Solution One (With having):
+```sql
+select Makes.Make, count(*) as NumberOfVehicles from VehicleDetails
+join Makes on VehicleDetails.MakeID = Makes.MakeID
+group by Makes.Make
+having count(*) > 20000
+order by NumberOfVehicles desc
+```
+
+### 💡 Solution Two (Without having):
+```sql
+select * from 
+(
+select Makes.Make, count(*) as NumberOfVehicles from VehicleDetails
+join Makes on VehicleDetails.MakeID = Makes.MakeID
+group by Makes.Make
+) T1
+where T1.NumberOfVehicles > 20000
+order by NumberOfVehicles desc
+```
+
+--- 
+
