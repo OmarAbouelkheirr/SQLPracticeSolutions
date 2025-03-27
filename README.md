@@ -221,3 +221,183 @@ order by NumberOfVehicles desc
 
 --- 
 
+## 🚀 Problem 14: Get all Makes with make starts with 'B'
+
+### 💡 Solution:
+```sql
+select Makes.Make from Makes
+where Make like 'B%'
+```
+
+--- 
+
+## 🚀 Problem 14: Get all Makes with make starts with 'B'
+
+### 💡 Solution:
+```sql
+select Makes.Make from Makes
+where Make like 'B%'
+```
+
+--- 
+
+## 🚀 Problem 15: Get all Makes with make ends with 'W'
+
+### 💡 Solution:
+```sql
+select Makes.Make from Makes
+where Make like '%W'
+```
+
+--- 
+
+## 🚀 Problem 16: Get all Makes that manufactures DriveTypeName = FWD
+
+### 💡 Solution:
+```sql
+select distinct Makes.Make, DriveTypes.DriveTypeName from VehicleDetails 
+join Makes on VehicleDetails.MakeID = Makes.MakeID
+join DriveTypes on VehicleDetails.DriveTypeID = DriveTypes.DriveTypeID
+where DriveTypeName = 'FWD'
+```
+
+--- 
+
+## 🚀 Problem 17: Get total Makes that Mantufactures DriveTypeName=FWD
+
+### 💡 Solution:
+```sql
+select distinct Makes.Make, DriveTypes.DriveTypeName from VehicleDetails 
+join Makes on VehicleDetails.MakeID = Makes.MakeID
+join DriveTypes on VehicleDetails.DriveTypeID = DriveTypes.DriveTypeID
+where DriveTypeName = 'FWD'
+```
+---
+
+## 🚀 Problem 18: Get total vehicles per DriveTypeName Per Make and order them per make asc then per total Desc
+
+### 💡 Solution:
+```sql
+select distinct Makes.Make, DriveTypes.DriveTypeName, count(*) as Total
+from VehicleDetails 
+join Makes on VehicleDetails.MakeID = Makes.MakeID
+join DriveTypes on VehicleDetails.DriveTypeID = DriveTypes.DriveTypeID
+group by Makes.Make, DriveTypes.DriveTypeName
+order by make asc, total desc
+```
+
+--- 
+
+## 🚀 Problem 19: Get total vehicles per DriveTypeName Per Make then filter only results with total > 10,000
+
+### 💡 Solution:
+```sql
+select distinct Makes.Make, DriveTypes.DriveTypeName, count(*) as Total
+from VehicleDetails 
+join Makes on VehicleDetails.MakeID = Makes.MakeID
+join DriveTypes on VehicleDetails.DriveTypeID = DriveTypes.DriveTypeID
+group by Makes.Make, DriveTypes.DriveTypeName
+having count(*) > 10000
+order by make asc, total desc
+```
+
+---
+
+## 🚀 Problem 20: Get all Vehicles that number of doors is not specified
+
+### 💡 Solution:
+```sql
+select * from VehicleDetails 
+where NumDoors is null
+```
+
+--- 
+
+## 🚀 Problem 21: Get Total Vehicles that number of doors is not specified
+
+### 💡 Solution:
+```sql
+select count(*) as Total from VehicleDetails 
+where NumDoors is null
+```
+
+--- 
+
+## 🚀 Problem 22: Get percentage of vehicles that has no doors specified
+
+### 💡 Solution:
+```sql
+select 
+(
+Cast( (select count(*) as Total from VehicleDetails where NumDoors is null) as float) / Cast( (select count(*) from VehicleDetails) as float)
+) as PercOfNoSpecifiedDoors
+```
+
+--- 
+
+## 🚀 Problem 23: Get MakeID , Make, SubModelName for all vehicles that have SubModelName 'Elite'
+
+### 💡 Solution:
+```sql
+select distinct Makes.MakeID, Makes.Make, SubModels.SubModelName from VehicleDetails
+join Makes on Makes.MakeID = VehicleDetails.MakeID
+join SubModels on SubModels.SubModelID = VehicleDetails.SubModelID
+
+where SubModelName = 'Elite'
+order by MakeID desc
+```
+
+--- 
+
+## 🚀 Problem 24: Get all vehicles that have Engines > 3 Liters and have only 2 doors
+
+### 💡 Solution:
+```sql
+select * from VehicleDetails 
+where Engine_Liter_Display > 3 and NumDoors = 2
+```
+
+--- 
+
+## 🚀 Problem 25: Get make and vehicles that the engine contains 'OHV' and have Cylinders = 4
+
+### 💡 Solution:
+```sql
+select Makes.Make, VehicleDetails.* from Makes
+join VehicleDetails on Makes.MakeID = VehicleDetails.MakeID
+where Engine LIKE '%OHV%' and Engine_Cylinders = 4
+```
+
+--- 
+## 🚀 Problem 26: Get all vehicles that their body is 'Sport Utility' and Year > 2020
+
+### 💡 Solution:
+```sql
+select * from VehicleDetails
+join Bodies on VehicleDetails.BodyID = Bodies.BodyID
+where BodyName = 'Sport Utility' and Year = 2020
+```
+
+---
+
+## 🚀 Problem 27: Get all vehicles that their Body is 'Coupe' or 'Hatchback' or 'Sedan'
+
+### 💡 Solution:
+```sql
+select * from VehicleDetails
+join Bodies on VehicleDetails.BodyID = Bodies.BodyID
+where BodyName in ('Coupe', 'Hatchback', 'Sedan')
+```
+
+--- 
+
+## 🚀 Problem 28: Get all vehicles that their body is 'Coupe' or 'Hatchback' or 'Sedan' and manufactured in year 2008 or 2020 or 2021
+
+### 💡 Solution:
+```sql
+select * from VehicleDetails
+join Bodies on VehicleDetails.BodyID = Bodies.BodyID
+where BodyName in ('Coupe', 'Hatchback', 'Sedan') and Year in (2008, 2020, 2021)
+```
+
+--- 
