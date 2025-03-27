@@ -1,6 +1,6 @@
 # 17 - Database - SQL (Projects & Practice)
 
-[Course Link](https://programmingadvices.com/courses/17-database-sql-practice)
+**[Course Link](https://programmingadvices.com/courses/17-database-sql-practice)**
 
 ---
 
