@@ -616,11 +616,112 @@ Having Make='Ford'
 
 ### 💡 Solution:
 ```sql
-SELECT Makes.Make, COUNT(*) AS NumberOfModels
-FROM Makes
-JOIN MakeModels ON Makes.MakeID = MakeModels.MakeID
-GROUP BY Makes.Make
-Order By NumberOfModels Desc
+select Makes.Make , count(*) as NumberOfModels from Makes
+join MakeModels on Makes.MakeID = MakeModels.MakeID
+group by Makes.Make
+order by NumberOfModels desc
+```
+
+---
+
+## 🚀 Problem 46: Get the highest 3 manufacturers that make the highest number of models
+
+### 💡 Solution:
+```sql
+select top(3) Makes.Make , count(*) as NumberOfModels from Makes
+join MakeModels on Makes.MakeID = MakeModels.MakeID
+group by Makes.Make
+order by NumberOfModels desc
+```
+
+---
+
+
+## 🚀 Problem 47: Get the highest number of models manufactured
+
+### 💡 Solution:
+```sql
+select top(1) count(*) as MaxNumberOfModels from Makes
+join MakeModels on Makes.MakeID = MakeModels.MakeID
+group by Makes.Make
+order by MaxNumberOfModels desc
+```
+
+---
+
+## 🚀 Problem 48: Get the highest Manufacturers manufactured the highest number of models
+
+### 💡 Solution:
+```sql
+select Makes.Make, count(*) as NumberOfModels from Makes
+join MakeModels on Makes.MakeID = MakeModels.MakeID
+group by Makes.Make
+having count(*) = (
+select max(NumberOfModels) as MaxNumberOfModels from 
+(
+	select MakeID, count(*) as NumberOfModels from MakeModels
+	group by MakeID
+) T1
+)
+```
+
+---
+
+## 🚀 Problem 49: Get the Lowest Manufacturers manufactured the lowest number of models
+
+### 💡 Solution:
+```sql
+select Makes.Make, count(*) as NumberOfModels from Makes
+join MakeModels on Makes.MakeID = MakeModels.MakeID
+group by Makes.Make
+having count(*) = (
+select min(NumberOfModels) as MinNumberOfModels from 
+(
+	select MakeID, count(*) as NumberOfModels from MakeModels
+	group by MakeID
+) T1
+)
+```
+
+---
+
+## 🚀 Problem 50: Get all Fuel Types , each time the result should be showed in random order
+
+### 💡 Solution:
+```sql
+select * from FuelTypes
+order by newID()
+```
+
+---
+
+## 🚀 Problem 51: Get all employees that have manager along with Manager's name.
+
+### 💡 Solution:
+```sql
+select 
+    Employees.Name as EmployeeName, 
+    Employees.ManagerID, 
+    Employees.Salary, 
+    Managers.Name as ManagerName
+from Employees
+join Employees as Managers 
+    on Employees.ManagerID = Managers.EmployeeID;
+```
+
+---
+
+## 🚀 Problem 52: Get all employees that have manager or does not have manager along with Manager's name, incase no manager name show null
+
+### 💡 Solution:
+```sql
+select 
+	Employees.Name, 
+	Employees.ManagerID,
+	Employees.Salary,
+	Managers.Name as ManagerName
+from Employees
+left join Employees as Managers on Employees.ManagerID = Managers.EmployeeID
 ```
 
 ---
